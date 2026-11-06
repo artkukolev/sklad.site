@@ -3,353 +3,358 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Склад IThub</title>
+<title>Склад IThub - Управление складом</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 <style>
-:root{--bg:#f2f2fa;--s1:#fff;--s2:#f0f0fa;--bd:rgba(30,30,70,.1);--ink:#15162b;--mut:#6d6f93;--ac:#6a5cf5;--ac2:#4f8bff;--ok:#12803f;--okb:#e3f6ea;--no:#c0267a;--nob:#fde8f2;--wt:#9a6a00;--wtb:#fff3d1;--sh:0 1px 2px rgba(20,20,60,.06),0 8px 24px rgba(20,20,60,.06);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d0e1d;--s1:#16172e;--s2:#1e2040;--bd:rgba(255,255,255,.08);--ink:#f4f4fc;--mut:#9b9dc4;--ac:#8d80ff;--ac2:#6aa0ff;--ok:#4ade80;--okb:#14352a;--no:#f472b6;--nob:#3a1a30;--wt:#fbbf24;--wtb:#3a2f12;--sh:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.35);color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0d0e1d;--s1:#16172e;--s2:#1e2040;--bd:rgba(255,255,255,.08);--ink:#f4f4fc;--mut:#9b9dc4;--ac:#8d80ff;--ac2:#6aa0ff;--ok:#4ade80;--okb:#14352a;--no:#f472b6;--nob:#3a1a30;--wt:#fbbf24;--wtb:#3a2f12;--sh:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.35);color-scheme:dark}
-html{scroll-padding-top:env(safe-area-inset-top,0px);scrollbar-gutter:stable}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);background-image:radial-gradient(900px 500px at 85% -10%,color-mix(in srgb,var(--ac) 18%,transparent),transparent),radial-gradient(700px 400px at -10% 110%,color-mix(in srgb,var(--ac2) 14%,transparent),transparent);background-attachment:fixed;color:var(--ink);font:15px/1.45 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
-button,input,select,textarea{font:inherit;color:inherit}
-button{cursor:pointer}
-a{color:inherit;text-decoration:none}
-:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
-.shell{display:grid;grid-template-columns:252px minmax(0,1fr);min-height:100dvh}
-.side{position:sticky;top:0;height:100dvh;padding:26px 16px;display:flex;flex-direction:column;gap:6px;border-right:1px solid var(--bd);background:color-mix(in srgb,var(--s1) 70%,transparent);backdrop-filter:blur(14px)}
-.brand{font-weight:700;font-size:19px;letter-spacing:-.01em;padding:0 12px 18px;display:flex;align-items:center;gap:10px}
-.brand i,.mtop i{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--ac),var(--ac2));display:grid;place-items:center;color:#fff;font-style:normal;font-size:15px}
-.tb{display:flex;align-items:center;gap:12px;border:0;background:none;color:var(--mut);font-weight:600;padding:11px 12px;border-radius:12px;text-align:left;width:100%;min-height:44px}
-.tb:hover{background:var(--s2)}.tb.on{background:var(--s2);color:var(--ink);box-shadow:inset 3px 0 0 var(--ac)}.tb.on svg{color:var(--ac)}
-.hdl{margin-top:auto;color:var(--mut);font-size:12px;padding:0 12px;display:flex;justify-content:space-between;align-items:center}
-.th2{border:1px solid var(--bd);background:var(--s1);border-radius:10px;width:36px;height:36px;font-size:16px}
-main{padding:34px 32px 60px;max-width:960px;width:100%;margin:0 auto;min-height:100dvh}
-h2{margin:0;font-size:28px;letter-spacing:-.02em;line-height:1.15}
-.top{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:20px;min-height:40px;flex-wrap:wrap}
-.card{background:var(--s1);border:1px solid var(--bd);border-radius:18px;box-shadow:var(--sh)}
-.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:18px}
-.k{padding:16px 18px;text-align:left;display:block;width:100%;color:inherit}
-button.k:hover,a.k:hover{border-color:var(--ac)}
-.k s{display:block;text-decoration:none;color:var(--mut);font-size:13px;font-weight:500}.k b{font-size:30px;letter-spacing:-.02em;font-weight:700}.k b.a{color:var(--ac)}.k b.w{color:var(--no)}
-.k.hero{background:linear-gradient(135deg,var(--ac),var(--ac2));border:0;color:#fff;grid-column:1/-1}.k.hero s{color:rgba(255,255,255,.8)}
-.lb{color:var(--mut);font-size:12px;letter-spacing:.08em;font-weight:600;margin:22px 4px 10px}
-.btn{border:0;border-radius:12px;padding:10px 16px;font-weight:600;background:var(--s2);min-height:42px;display:inline-flex;align-items:center;justify-content:center;gap:8px}
-.btn.pr{background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff}.btn.dg{color:var(--no)}.btn.sm{min-height:34px;padding:6px 12px;font-size:13px}
-.ch{background:var(--s1);border:1px solid var(--bd);border-radius:99px;padding:7px 14px;font-weight:600;font-size:13px;color:var(--mut);min-height:36px}.ch.on{background:var(--ac);border-color:var(--ac);color:#fff}
-.bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center}
-.in{width:100%;background:var(--s2);border:1px solid var(--bd);border-radius:12px;padding:11px 14px;min-height:44px}
-.in:focus{border-color:var(--ac);outline:0}
-.lst{overflow:hidden}
-.ri{padding:14px 18px;border-bottom:1px solid var(--bd)}.ri:last-child{border:0}.ri.clk{cursor:pointer}.ri.clk:hover{background:var(--s2)}
-.row{display:flex;justify-content:space-between;gap:10px;align-items:center}
-.mut{color:var(--mut);font-size:13px}
-.pl{border-radius:99px;padding:3px 11px;font-size:12px;font-weight:600;white-space:nowrap;border:0;background:var(--s2);color:var(--mut)}
-.pl.ok{background:var(--okb);color:var(--ok)}.pl.rej{background:var(--nob);color:var(--no)}.pl.wait{background:var(--wtb);color:var(--wt)}
-.pl.out{background:color-mix(in srgb,var(--ac) 18%,transparent);color:var(--ac)}.pl.done{background:var(--s2);color:var(--mut)}.pl.work{background:var(--wtb);color:var(--wt)}.pl.idea{background:color-mix(in srgb,var(--ac) 18%,transparent);color:var(--ac)}
-.inv{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:12px}
-.it{display:flex;gap:14px;align-items:center;padding:12px;cursor:pointer;min-height:88px;transition:border-color .15s}
-.it:hover{border-color:var(--ac)}
-.th{width:64px;height:64px;border-radius:14px;background:var(--s2);flex:none;object-fit:cover;display:grid;place-items:center;color:var(--mut)}
-.nm{flex:1;min-width:0}.nm b{display:block;overflow-wrap:anywhere;font-weight:600}
-.loc{display:inline-block;font-size:11px;font-weight:600;background:var(--s2);border-radius:99px;padding:2px 9px;color:var(--mut);margin:4px 4px 0 0}
-.loc.warn{background:var(--nob);color:var(--no)}.loc.rsv{background:var(--wtb);color:var(--wt)}
-.sp{display:flex;align-items:center;gap:6px;flex:none}
-.sp button{width:40px;height:40px;border-radius:12px;border:0;background:var(--ac);color:#fff;font-size:22px;line-height:1;font-weight:600}
-.sp button:active{transform:scale(.94)}
-.sp input{width:64px;height:40px;text-align:center;background:var(--s2);border:1px solid var(--bd);border-radius:12px;padding:0;font-weight:700;-moz-appearance:textfield}
-.qty{font-size:22px;font-weight:700;min-width:44px;text-align:right}
-dialog{border:1px solid var(--bd);border-radius:22px;background:var(--s1);color:var(--ink);width:min(480px,94vw);padding:22px;max-height:92dvh;box-shadow:0 30px 80px rgba(0,0,0,.45)}
-dialog::backdrop{background:rgba(8,8,24,.6);backdrop-filter:blur(4px)}
-dialog label.l{display:block;font-size:12px;font-weight:600;color:var(--mut);margin:14px 0 6px}
-.pv{width:100%;aspect-ratio:4/3;border-radius:16px;background:var(--s2);object-fit:cover;display:grid;place-items:center;color:var(--mut);margin-bottom:10px}
-.fb{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}.fb .btn{flex:1}
-.seg{display:flex;background:var(--s2);border-radius:14px;padding:4px}.seg button{flex:1;border:0;background:none;padding:9px;border-radius:11px;font-weight:600;color:var(--mut)}.seg button.on{background:var(--ac);color:#fff}
-.ln{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--bd);font-size:14px}
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(24px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);border-radius:14px;padding:11px 16px;display:flex;gap:14px;align-items:center;box-shadow:var(--sh);z-index:30;font-weight:500;max-width:92vw}
-.toast[hidden]{display:none}.toast button{border:0;background:none;color:var(--ac2);font-weight:700}
-.note{padding:12px 16px;border-radius:14px;background:var(--wtb);color:var(--wt);font-size:13px;font-weight:500;margin-bottom:16px}.note[hidden]{display:none}
-.prog{height:8px;border-radius:99px;background:var(--s2);overflow:hidden;margin:6px 0 16px}.prog i{display:block;height:100%;background:linear-gradient(90deg,var(--ac),var(--ac2))}
-.mtop{display:none}
-@media print{.side,.toast,.mtop,button,.bar,#sq,.note{display:none!important}.shell{display:block}main{padding:0}body{background:#fff;color:#000}.card{box-shadow:none}}
-@media (max-width:860px){
-  .shell{display:block}
-  .side{position:fixed;inset:auto 0 0 0;top:auto;height:auto;flex-direction:row;padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));border:0;border-top:1px solid var(--bd);z-index:20;gap:0}
-  .brand,.hdl{display:none}
-  .tb{flex-direction:column;gap:2px;font-size:11px;padding:6px 2px;justify-content:center;align-items:center;text-align:center;box-shadow:none!important}
-  .tb.on{background:none}
-  main{padding:20px 14px 110px}
-  .mtop{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;margin-bottom:16px}.mtop i{width:28px;height:28px;font-size:14px}.mtop .th2{margin-left:auto}
-  h2{font-size:24px}.inv{grid-template-columns:1fr}.toast{bottom:calc(86px + env(safe-area-inset-bottom,0px))}
+:root{
+  --bg:#f2f2fa;
+  --s1:#fff;
+  --s2:#f0f0fa;
+  --bd:rgba(30,30,70,.1);
+  --ink:#15162b;
+  --mut:#6d6f93;
+  --ac:#6a5cf5;
+  --ac2:#4f8bff;
+  --ok:#12803f;
+  --okb:#e3f6ea;
+  --no:#c0267a;
+  --nob:#fde8f2;
+  --wt:#9a6a00;
+  --wtb:#fff3d1;
+  --sh:0 1px 2px rgba(20,20,60,.06),0 8px 24px rgba(20,20,60,.06);
+  --radius:12px;
+  --transition:.2s;
 }
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0d0e1d;
+    --s1:#16172e;
+    --s2:#1e2040;
+    --bd:rgba(255,255,255,.08);
+    --ink:#f4f4fc;
+    --mut:#9b9dc4;
+    --ac:#8d80ff;
+    --ac2:#6aa0ff;
+    --ok:#4ade80;
+    --okb:#14352a;
+    --no:#f472b6;
+    --nob:#3a1a30;
+    --wt:#fbbf24;
+    --wtb:#3a2f12;
+    --sh:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.35);
+  }
+}
+html{scroll-behavior:smooth}
+*{box-sizing:border-box;margin:0}
+img,max-width:100%;height:auto}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer}
+img,svg{max-width:100%;display:block}
+*:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+*/
+/* ============================================================
+   Layout
+   ============================================================*/
+.shell{min-height:100vh;display:grid;grid-template-columns:260px 1fr;gap:0}
+.side{
+  position:sticky;top:0;height:100vh;padding:20px 16px;background:var(--s1);
+  border-right:1px solid var(--bd);display:flex;flex-direction:column;gap:8px;z-index:20}
+.brand{font-weight:700;font-size:18px;letter-spacing:-.01em;padding:8px 12px 14px;display:flex;align-items:center;gap:8px}
+.brand i{width:28px;height:28px;border-radius:6px;background:linear-gradient(135deg,var(--ac),var(--ac2));display:grid;place-items:center;color:#fff;font-size:13px}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap}
+.topbar .user{font-size:12px;color:var(--mut);white-space:nowrap}
+.topbar .theme-tgl{width:44px;height:24px;background:var(--s2);border-radius:99px;padding:2px;display:inline-flex;align-items:center;gap:4px}
+.topbar .theme-tgl span{width:12px;height:12px;border-radius:50%;background:var(--ac);transition:var(--transition)}
+.main{
+  padding:24px;max-width:960px;width:100%;margin:0 auto;min-height:100vh;overflow:hidden
+}
+.hero{background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;padding:20px;border-radius:var(--radius);margin-bottom:24px}
+.hero h1{margin:0;font-size:24px;letter-spacing:-.02em}
+.switcher{margin-top:12px;display:flex;gap:6px}
+.switcher .btn{padding:6px 10px;font-size:12px;border-radius:var(--radius);background:var(--s2);color:var(--mut);border:0;cursor:pointer;transition:var(--transition)}
+.switcher .btn.active{background:var(--ac);color:#fff}
+.notice{background:var(--wtb);color:var(--wt);padding:8px 12px;border-radius:var(--radius);font-size:12px;margin-bottom:16px;display:none}
+.note{padding:10px 12px;border-radius:var(--radius);background:var(--wtb);color:var(--wt);font-size:12px;margin-bottom:12px;display:none}
+*/
+/* ============================================================
+   Auth
+   ============================================================*/
+.auth-box{background:var(--s1);border:1px solid var(--bd);border-radius:var(--radius);padding:24px;max-width:380px;margin:0 auto;box-shadow:var(--sh)}
+.auth-box h2{margin:0 0 16px;font-size:20px;letter-spacing:-.01em}
+.auth-box .form-group{margin-bottom:12px}
+.auth-box .form-group label{display:block;margin-bottom:4px;font-size:12px;color:var(--mut)}
+.auth-box .form-group input{width:100%;padding:8px 10px;border:1px solid var(--bd);border-radius:var(--radius);font:inherit;background:var(--bg);color:var(--ink)}
+.auth-box .form-group input:focus{outline:0;border-color:var(--ac)}
+.auth-box .btn{width:100%;padding:8px 12px;font-weight:600;border:0;border-radius:var(--radius);background:var(--ac);color:#fff;margin-top:4px;transition:var(--transition)}
+.auth-box .btn:hover{background:var(--ac2)}
+.auth-box .link{text-align:center;margin-top:10px;font-size:12px;color:var(--mut)}
+.auth-box .link a{color:var(--ac)}
+*/
+/* ============================================================
+   Nav
+   ============================================================*/
+.nav{display:flex;flex-direction:column;gap:6px}
+.nav a{padding:8px 10px;border-radius:var(--radius);color:var(--mut);font-weight:500;transition:var(--transition)}
+.nav a:hover,.nav a.active{background:var(--s2);color:var(--ink)}
+*/
+/* ============================================================
+   Catalog / List
+   ============================================================*/
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:16px}
+.card{background:var(--s1);border:1px solid var(--bd);border-radius:var(--radius);padding:12px;transition:var(--transition);cursor:pointer}
+.card:hover{border-color:var(--ac)}
+.card .title{font-weight:600;margin-bottom:6px}
+.card .price{color:var(--ok);font-weight:600;margin-top:4px}
+.card .stock{color:var(--mut);font-size:12px;margin-top:4px}
+.card .actions{margin-top:8px;display:flex;gap:4px}
+.btn-small{padding:4px 8px;font-size:11px;border:0;border-radius:6px;background:var(--s2);color:var(--mut);cursor:pointer;transition:var(--transition)}
+.btn-small:hover{background:var(--ac);color:#fff}
+*/
+/* ============================================================
+   Auth Modals
+   ============================================================*/
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:100}
+.overlay.active{display:flex}
+.modal{background:var(--s1);border-radius:var(--radius);padding:24px;width:90%;max-width:400px;transform:scale(0.9);transition:transform .2s}
+.overlay.active .modal{transform:scale(1)}
+.modal h2{margin:0 0 16px;font-size:18px;letter-spacing:-.01em}
+.modal .form-group{margin-bottom:12px}
+.modal .form-group label{display:block;margin-bottom:4px;font-size:12px;color:var(--mut)}
+.modal .form-group input{width:100%;padding:8px 10px;border:1px solid var(--bd);border-radius:var(--radius);font:inherit;background:var(--bg);color:var(--ink)}
+.modal .form-group input:focus{outline:0;border-color:var(--ac)}
+.modal .actions{margin-top:12px;display:flex;gap:6px}
+.modal .btn{flex:1;padding:6px 10px;font-weight:600;border:0;border-radius:var(--radius);background:var(--ac);color:#fff}
+.modal .btn.cancel{background:var(--s2);color:var(--mut);border:1px solid var(--bd)}
+*/
+/* ============================================================
+   Responsive
+   ============================================================*/
+@media (max-width:860px){
+  .shell{grid-template-columns:1fr}
+  .side{position:fixed;inset:auto 0 0 0;top:auto;height:auto;flex-direction:column;padding:12px 8px;border:0;border-top:1px solid var(--bd);z-index:20}
+  .brand,.hdl{display:none}
+  .main{padding:16px}
+  .mtop{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px;margin-bottom:8px}
+  .mtop .hdl{display:none}
+  h2{font-size:20px}
+  .grid{grid-template-columns:1fr}
+  .toast{bottom:calc(86px + env(safe-area-inset-bottom,0px))}
+}
+*/
+/* ============================================================
+   IndexedDB (Dexie.js) - клиенты, заказы, товары
+   ============================================================*/
 </style>
 </head>
 <body>
-<div class="shell">
-  <aside class="side"><div class="brand"><i>▣</i>Склад IThub</div><div id="nv" style="display:contents"></div><div class="hdl"><span>@warehouseIThubBot</span><button class="th2" data-a="theme" aria-label="Сменить тему">◐</button></div></aside>
-  <main><div class="mtop"><i>▣</i>Склад IThub<button class="th2" data-a="theme" aria-label="Сменить тему">◐</button></div><div class="note" id="nt" hidden></div><div id="m"></div></main>
+<!-- ============================================================
+   Auth Overlay
+   ============================================================-->
+<div id="authOverlay" class="overlay" role="dialog" aria-modal="true" aria-labelledby="authTitle" style="display:none">
+  <div class="modal" id="authModal">
+    <h2 id="authTitle">Вход в систему</h2>
+    <div class="form-group"><label for="authLogin">Логин</label><input id="authLogin" type="text" placeholder="Введите логин"></div>
+    <div class="form-group"><label for="authPass">Пароль</label><input id="authPass" type="password" placeholder="Введите пароль"></div>
+    <div class="actions"><button class="btn" id="authBtn">Войти</button><button class="btn cancel" id="authCancel">Отмена</button></div>
+  </div>
 </div>
-<dialog id="dlg"></dialog>
-<input type="file" id="imp" accept="application/json,.json" hidden>
-<div class="toast" id="ts" hidden></div>
+
+<!-- ============================================================
+   Header / Topbar
+   ============================================================-->
+<header class="topbar">
+  <div class="brand"><i>▣</i>Склад IThub</div>
+  <div class="user" id="userGreeting">Гость</div>
+  <div class="theme-tgl"><span data-theme="light"></span><span data-theme="dark"></span></div>
+</header>
+
+<!-- ============================================================
+   Main Content
+   ============================================================-->
+<main class="main">
+  <div class="mtop">
+    <i>▣</i>Склад IThub<button class="th2" data-theme="light" aria-label="Сменить тему">◐</button>
+  </div>
+  <div class="note" id="notice" hidden></div>
+  <div id="app"></div>
+</div>
+
+<!-- ============================================================
+   IndexedDB (Dexie.js)
+   ============================================================-->
+<script src="https://cdn.jsdelivr.net/npm/dexie@latest/dist/dexie.min.js"></script>
+
 <script>
 const $=s=>document.querySelector(s);
-const IC={home:'M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z',reqs:'M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01',chat:'M21 12a8 8 0 0 1-11.6 7.1L3 21l1.9-5.4A8 8 0 1 1 21 12z',stock:'M21 8l-9-5-9 5v8l9 5 9-5zM3 8l9 5 9-5M12 13v8',admin:'M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z',cam:'M4 8h3l2-3h6l2 3h3v11H4zM12 17a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z'};
-const svg=(k,s=22)=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="${IC[k]}"/></svg>`;
-const TABS=[['home','Главная'],['reqs','Заявки'],['chat','Связь'],['stock','Склад'],['admin','Админ']];
-const LOCS=['Евродвушка','Архив','Склад'];
-const SL={ok:'одобрена',rej:'отклонена',wait:'на согласовании',out:'выдана',done:'закрыта'};
-const TL={idea:'Идея',work:'В работе',done:'Готово'};
-const SHEET='https://docs.google.com/spreadsheets/d/1bGYyEzD7nRimij4lZbinuupY2sE5E-vzRZ4ZTow5BmM/edit';
-const S={inv:[],reqs:[],log:[],tasks:[]};
-let db=null,dl=null,usr=null,me='',tab=(location.hash||'#home').slice(1),sub='',edit=false,lf='',q='',srt='ord',dr=null,di=null,rl=[],rk='get',tt,ud=null,rf='all',rq='',lq='',aud=new Set();
-const pend={},sess={},NM={};
-if(!TABS.some(x=>x[0]===tab))tab='home';
-const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const fmt=ts=>new Date(ts).toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
-const match=n=>S.inv.find(v=>v.n.toLowerCase()===String(n).trim().toLowerCase());
-const reserved=v=>S.reqs.filter(r=>r.s==='ok'&&r.k!=='ret').reduce((a,r)=>a+(r.it||[]).filter(z=>match(z[0])===v).reduce((b,z)=>b+z[1],0),0);
-const low=v=>v.q!=null&&v.min!=null&&v.q<=v.min;
-function toast(m,undo){const e=$('#ts');e.innerHTML=`<span>${esc(m)}</span>${undo?'<button id="un">Отменить</button>':''}`;e.hidden=false;ud=undo;clearTimeout(tt);tt=setTimeout(()=>e.hidden=true,4500)}
-function note(m){const e=$('#nt');e.textContent=m||'';e.hidden=!m}
-function theme(){const c=document.documentElement.dataset.theme||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'),n=c==='dark'?'light':'dark';document.documentElement.dataset.theme=n;try{localStorage.setItem('th',n)}catch(e){}}
-async function init(){
-  try{const t=localStorage.getItem('th');if(t)document.documentElement.dataset.theme=t}catch(e){}
-  render();
-  try{if(window.claude){db=await claude.use('db');dl=await claude.use('downloads');usr=await claude.use('user');if(usr)me=await usr.id()}}catch(e){}
-  if(!db){note('Хранилище недоступно: изменения не сохранятся после закрытия страницы.');return}
-  const to=setTimeout(()=>note('Данные пока не загрузились. Возможно, нет связи.'),10000);
-  const err=()=>note('Не удалось подключиться к хранилищу.');
-  db.collection('inv').onSnapshot(s=>{clearTimeout(to);note('');const old=new Map(S.inv.map(v=>[v.id,v]));S.inv=s.docs.map(d=>pend[d.id]&&old.has(d.id)?old.get(d.id):{id:d.id,...d.data()}).sort((a,b)=>(a.ord??0)-(b.ord??0));render()},err);
-  db.collection('reqs').onSnapshot(s=>{S.reqs=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>parseInt(b.i)-parseInt(a.i));render()},err);
-  db.collection('tasks').onSnapshot(s=>{S.tasks=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>b.ts-a.ts);render()},err);
-  db.collection('log').orderBy('ts','desc').limit(150).onSnapshot(s=>{S.log=s.docs.map(d=>d.data());names();render()},err);
+// === 1. AUTH STATE & STORAGE ===
+const USERS_KEY = 'sklad_users';
+const TOKEN_KEY = 'sklad_token';
+
+function login(user) {
+  localStorage.setItem(TOKEN_KEY, user);
+  sessionStorage.setItem('sklad_user', user);
+  document.getElementById('authOverlay').style.display = 'none';
+  document.getElementById('userGreeting').textContent = `Привет, ${user}`;
+  showNotice(`Добро пожаловать, ${user}!`, 'success');
+  renderCatalog();
 }
-function names(){
-  const ids=[...new Set(S.log.map(z=>z.u).filter(Boolean))].filter(i=>!NM[i]);
-  if(!ids.length||!usr||!usr.profiles)return;
-  usr.profiles(ids).then(p=>{ids.forEach(i=>NM[i]=(p[i]&&p[i].name)||'Участник');render()}).catch(()=>ids.forEach(i=>NM[i]='Участник'));
+
+function logout() {
+  localStorage.removeItem(TOKEN_KEY);
+  sessionStorage.removeItem('sklad_user');
+  document.getElementById('userGreeting').textContent = 'Гость';
+  document.getElementById('authOverlay').style.display = 'flex';
+  document.getElementById('app').innerHTML = '';
+  showNotice('Вы вышли из системы', 'info');
 }
-const who=u=>!u?'':(u===me?'вы':(NM[u]||'участник'));
-const log=(t,x,i)=>{if(db)db.collection('log').add({ts:Date.now(),t,x,u:me||'',i:i||''}).catch(()=>{})};
-function putInv(o,delay=0){
-  const i=S.inv.findIndex(v=>v.id===o.id);if(i<0)S.inv.push(o);else S.inv[i]=o;
-  S.inv.sort((a,b)=>(a.ord??0)-(b.ord??0));render();
-  clearTimeout(pend[o.id]);
-  pend[o.id]=setTimeout(async()=>{try{const{id,...d}=o;if(db)await db.doc('inv/'+id).set(d)}catch(e){toast('Не удалось сохранить изменение')}delete pend[o.id]},delay);
+
+// Проверка сохраненного пользователя при загрузке
+const savedUser = sessionStorage.getItem('sklad_user');
+if (savedUser) {
+  login(savedUser);
+} else {
+  document.getElementById('authOverlay').style.display = 'flex';
 }
-function bump(id,n){
-  const v=S.inv.find(z=>z.id===id);if(!v)return;const prev=v.q;
-  if(!sess[id])sess[id]={from:prev};
-  v.q=n;putInv(v,500);
-  clearTimeout(sess[id].t);
-  sess[id].t=setTimeout(()=>{if(sess[id].from!==v.q)log('qty',`${v.n}: ${sess[id].from??'—'} → ${v.q??'—'}`,id);delete sess[id]},1500);
-  toast(`${v.n}: ${prev??'—'} → ${n??'—'}`,()=>bump(id,prev));
-}
-const shrink=f=>new Promise(r=>{const im=new Image(),u=URL.createObjectURL(f);im.onload=()=>{const k=Math.min(1,560/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*k;c.height=im.height*k;c.getContext('2d').drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);r(c.toDataURL('image/jpeg',.72))};im.onerror=()=>r(null);im.src=u});
-const stepper=(v,x)=>`<div class="sp" data-x="${x}"><button data-a="dec" aria-label="Минус один">−</button><input type="number" min="0" inputmode="numeric" data-a="num" value="${v??''}" placeholder="—" aria-label="Количество"><button data-a="inc" aria-label="Плюс один">+</button></div>`;
-const back='<button class="ch" data-a="back" style="margin-bottom:14px">← Админка</button>';
-function actions(r){
-  const b=(a,t,c='')=>`<button class="btn sm ${c}" data-a="${a}" data-id="${r.id}">${t}</button>`;
-  if(r.s==='wait')return b('rej','Отклонить','dg')+b('app','Одобрить','pr');
-  if(r.s==='ok')return b('rej','Отклонить','dg')+(r.k==='ret'?b('back2','Принять возврат','pr'):b('issue','Выдать','pr'));
-  if(r.s==='out')return b('back2','Принять возврат','pr');
-  return '';
-}
-const reqRow=(r,adm)=>`<div class="ri ${adm?'':'clk'}" ${adm?'':`data-a="vreq" data-id="${r.id}"`}><div class="row"><b>${esc(r.e)}</b><span class="pl ${r.s}">${SL[r.s]}</span></div><div>${r.o||''}${r.b?' – '+r.b:''}${r.v?' · '+esc(r.v):''}</div><div class="mut">№${esc(r.i)} · ${r.k==='ret'?'возврат':'получение'}${(r.it||[]).length?' · '+r.it.map(z=>esc(z[0])+' ×'+z[1]).join(', '):''}</div>${adm?`<div class="row" style="justify-content:flex-end;margin-top:10px;gap:8px">${actions(r)}</div>`:''}</div>`;
-function inventory(adm){
-  const ed=adm||edit;
-  let l=S.inv.filter(v=>(lf==='low'?low(v):(!lf||v.l===lf))&&(!q||v.n.toLowerCase().includes(q)));
-  if(srt==='name')l=[...l].sort((a,b)=>a.n.localeCompare(b.n,'ru'));
-  if(srt==='qty')l=[...l].sort((a,b)=>(a.q??1e9)-(b.q??1e9));
-  const nl=S.inv.filter(low).length;
-  return `<div class="top"><h2>${adm?'Наличие':'Склад'}</h2>${adm?'<button class="btn pr" data-a="add">+ Добавить</button>':`<button class="ch ${edit?'on':''}" data-a="edit">✎ Правка</button>`}</div>
-  ${adm?back:''}
-  <div class="bar"><input class="in" id="sq" placeholder="Поиск позиции (нажмите /)" value="${esc(q)}" style="flex:1;min-width:200px"><select class="in" id="srt" style="width:auto"><option value="ord" ${srt==='ord'?'selected':''}>По порядку</option><option value="name" ${srt==='name'?'selected':''}>По названию</option><option value="qty" ${srt==='qty'?'selected':''}>Сначала мало</option></select></div>
-  <div class="bar"><button class="ch ${lf?'':'on'}" data-a="loc" data-l="">Все</button>${LOCS.map(o=>`<button class="ch ${lf===o?'on':''}" data-a="loc" data-l="${o}">${o}</button>`).join('')}<button class="ch ${lf==='low'?'on':''}" data-a="loc" data-l="low">Мало${nl?' · '+nl:''}</button></div>
-  <div class="mut" style="margin:0 4px 10px">${l.length} позиций</div>
-  <div class="inv">${l.map(v=>{const rs=reserved(v);return `<div class="card it" data-a="open" data-id="${v.id}">${v.ph?`<img class="th" src="${v.ph}" alt="">`:`<div class="th">${svg('stock',26)}</div>`}<div class="nm"><b>${esc(v.n)}</b><span class="loc">${v.l||'место не указано'}</span>${rs?`<span class="loc rsv">резерв ${rs}</span>`:''}${low(v)?'<span class="loc warn">мало</span>':''}</div>${ed?stepper(v.q,v.id):`<div class="qty">${v.q??'—'}</div>`}</div>`}).join('')}</div>${l.length?'':'<div class="mut" style="padding:30px;text-align:center">Ничего не найдено</div>'}`;
-}
-function vHome(){
-  const wait=S.reqs.filter(r=>r.s==='wait'),act=S.reqs.filter(r=>(r.s==='ok'||r.s==='out')&&r.k!=='ret');
-  return `<div class="top"><h2>Привет, Артём</h2></div><div class="g2"><div class="card k"><s>На согласовании</s><b>${wait.length}</b></div><div class="card k"><s>Нужно вернуть</s><b class="a">${act.length}</b></div><button class="card k" data-a="lowgo"><s>Мало на складе</s><b class="${S.inv.filter(low).length?'w':''}">${S.inv.filter(low).length}</b></button></div><div class="row" style="justify-content:center;margin:6px 0"><button class="btn pr" data-a="newreq">+ Новая заявка</button></div><div class="lb">БЛИЖАЙШИЕ</div><div class="card lst">${S.reqs.filter(r=>r.s!=='rej'&&r.s!=='done').map(r=>reqRow(r)).join('')||'<div class="ri mut">Пока ничего</div>'}</div>${S.log.length?`<div class="lb">НЕДАВНИЕ ИЗМЕНЕНИЯ</div><div class="card lst">${S.log.slice(0,5).map(z=>`<div class="ri row"><span>${esc(z.x)}</span><span class="mut">${fmt(z.ts)}</span></div>`).join('')}</div>`:''}`;
-}
-function vReqs(){
-  const l=S.reqs.filter(r=>(rf==='all'||r.s===rf)&&(!rq||(r.i+' '+r.e+' '+(r.v||'')+' '+(r.it||[]).map(z=>z[0]).join(' ')).toLowerCase().includes(rq)));
-  return `<div class="top"><h2>Мои заявки</h2><button class="btn pr" data-a="newreq">+ Новая заявка</button></div><input class="in" id="rqs" placeholder="Поиск по заявкам" value="${esc(rq)}" style="margin-bottom:12px"><div class="bar">${[['all','Все'],['wait','На согласовании'],['ok','Одобрены'],['out','Выданы'],['done','Закрыты'],['rej','Отклонены']].map(([k,v])=>`<button class="ch ${rf===k?'on':''}" data-a="rf" data-k="${k}">${v}</button>`).join('')}</div><div class="card lst">${l.map(r=>reqRow(r)).join('')||'<div class="ri mut">Заявок не найдено</div>'}</div>`;
-}
-function vAdmin(){
-  const wait=S.reqs.filter(r=>r.s==='wait').length,act=S.reqs.filter(r=>r.s==='ok'||r.s==='out').length;
-  return `<div class="top"><h2>Панель админа</h2></div><div class="g2"><button class="card k hero" data-a="inv"><s>Новое</s><b>Наличие</b><s>${S.inv.length} позиций · фото и счётчики</s></button><button class="card k" data-a="queue"><s>Очередь</s><b>${wait}</b></button><button class="card k" data-a="active"><s>Активные</s><b class="a">${act}</b></button><div class="card k"><s>Возвраты</s><b>${S.reqs.filter(r=>r.k==='ret').length}</b></div><div class="card k"><s>Обращения</s><b>0</b></div><div class="card k"><s>Доступ</s><b>0</b></div><button class="card k" data-a="hist"><s>История</s><b>→</b></button><button class="card k" data-a="tasks"><s>Задачи по боту</s><b>${S.tasks.filter(t=>t.s!=='done').length}</b></button><button class="card k" data-a="audit"><s>Инвентаризация</s><b style="font-size:18px">Сверка →</b></button><button class="card k" data-a="data"><s>Данные</s><b style="font-size:18px">Экспорт и импорт →</b></button><a class="card k" href="${SHEET}" target="_blank" rel="noopener"><s>Таблица</s><b style="font-size:18px">Открыть ↗</b></a></div>`;
-}
-function vQueue(){const l=S.reqs.filter(r=>r.s==='wait');return `<div class="top"><h2>Очередь</h2></div>${back}<div class="card lst">${l.map(r=>reqRow(r,1)).join('')||'<div class="ri mut">Очередь пуста</div>'}</div>`}
-function vActive(){const l=S.reqs.filter(r=>r.s==='ok'||r.s==='out');return `<div class="top"><h2>Активные заявки</h2></div>${back}<div class="card lst">${l.map(r=>reqRow(r,1)).join('')||'<div class="ri mut">Активных заявок нет</div>'}</div>`}
-function vHist(){const l=S.log.filter(z=>!lq||z.x.toLowerCase().includes(lq));return `<div class="top"><h2>История</h2></div>${back}<input class="in" id="lqs" placeholder="Поиск по истории" value="${esc(lq)}" style="margin-bottom:12px"><div class="card lst">${l.map(z=>`<div class="ri"><div class="row"><span>${esc(z.x)}</span><span class="mut">${fmt(z.ts)}</span></div>${z.u?`<div class="mut">${esc(who(z.u))}</div>`:''}</div>`).join('')||'<div class="ri mut">Изменений пока нет</div>'}</div>`}
-function vTasks(){
-  const grp=s=>S.tasks.filter(t=>t.s===s);
-  const sec=s=>grp(s).length?`<div class="lb">${TL[s].toUpperCase()} · ${grp(s).length}</div><div class="card lst">${grp(s).map(t=>`<div class="ri row"><span style="${s==='done'?'opacity:.55;text-decoration:line-through':''}">${esc(t.t)}${t.u?`<span class="mut"> · ${esc(who(t.u))}</span>`:''}</span><span class="row" style="gap:6px"><button class="pl ${s}" data-a="tcy" data-id="${t.id}" title="Сменить статус">${TL[s]}</button><button class="ch" data-a="tdel" data-id="${t.id}" aria-label="Удалить">✕</button></span></div>`).join('')}</div>`:'';
-  return `<div class="top"><h2>Задачи по боту</h2></div>${back}<div class="mut" style="margin-bottom:10px">Общий список идей и задач: что докрутить в боте. Нажмите на статус, чтобы сменить его.</div><div class="bar"><input class="in" id="tn" placeholder="Новая идея или задача" style="flex:1;min-width:200px"><button class="btn pr" data-a="tadd">Добавить</button></div>${sec('work')}${sec('idea')}${sec('done')}${S.tasks.length?'':'<div class="mut" style="padding:24px;text-align:center">Пока пусто</div>'}`;
-}
-function vAudit(){
-  const n=S.inv.length,d=S.inv.filter(v=>aud.has(v.id)).length;
-  return `<div class="top"><h2>Инвентаризация</h2><button class="btn pr" data-a="audfin">Завершить</button></div>${back}<div class="mut">Пройдитесь по складу: поправьте число, если оно не совпало, и отметьте позицию галочкой. Сверено ${d} из ${n}.</div><div class="prog"><i style="width:${n?d/n*100:0}%"></i></div><div class="card lst">${S.inv.map(v=>`<div class="ri row"><div class="nm"><b>${esc(v.n)}</b><span class="loc">${v.l||'место не указано'}</span></div><div class="row" style="gap:10px">${stepper(v.q,v.id)}<button class="btn sm ${aud.has(v.id)?'pr':''}" data-a="aud" data-id="${v.id}" aria-label="Сверено">✓</button></div></div>`).join('')}</div>`;
-}
-function vData(){
-  return `<div class="top"><h2>Данные</h2></div>${back}<div class="g2"><button class="card k" data-a="x-inv"><s>Склад</s><b style="font-size:18px">Скачать CSV</b></button><button class="card k" data-a="x-req"><s>Заявки</s><b style="font-size:18px">Скачать CSV</b></button><button class="card k" data-a="x-json"><s>Полная копия</s><b style="font-size:18px">Скачать JSON</b></button><button class="card k" data-a="x-imp"><s>Восстановить из копии</s><b style="font-size:18px">Загрузить JSON</b></button><button class="card k" data-a="x-print"><s>Склад на бумаге</s><b style="font-size:18px">Печать</b></button></div><div class="mut">JSON-копия содержит позиции с фото, заявки и задачи. Её удобно передавать разработчику бота, а CSV открывается в Excel и Google Таблицах.</div>`;
-}
-function render(){
-  const y=scrollY;
-  $('#nv').innerHTML=TABS.map(([k,v])=>`<button class="tb ${tab===k?'on':''}" data-t="${k}">${svg(k)}<span>${v}</span></button>`).join('');
-  let h='';
-  if(tab==='home')h=vHome();
-  else if(tab==='reqs')h=vReqs();
-  else if(tab==='chat')h=`<div class="top"><h2>Связь со складом</h2></div><div class="g2"><button class="card k" style="text-align:center"><b style="font-size:17px">🔧 Сломалась вещь</b></button><button class="card k" style="text-align:center"><b style="font-size:17px">💡 Идея по боту</b></button></div>`;
-  else if(tab==='stock')h=inventory(false);
-  else h=({inv:()=>inventory(true),queue:vQueue,active:vActive,hist:vHist,tasks:vTasks,audit:vAudit,data:vData}[sub]||vAdmin)();
-  const ae=document.activeElement,aid=ae&&ae.id,sp=ae&&ae.selectionStart;
-  $('#m').innerHTML=h;scrollTo(0,y);
-  [['sq',v=>{q=v.toLowerCase()}],['rqs',v=>{rq=v.toLowerCase()}],['lqs',v=>{lq=v.toLowerCase()}]].forEach(([id,fn])=>{const e=$('#'+id);if(e){e.oninput=ev=>{fn(ev.target.value);const p=ev.target.selectionStart;render();const s=$('#'+id);s.focus();s.setSelectionRange(p,p)}}});
-  const tn=$('#tn');if(tn){tn.onkeydown=ev=>{if(ev.key==='Enter')addTask()};if(aid==='tn'){tn.focus()}}
-  const so=$('#srt');if(so)so.onchange=ev=>{srt=ev.target.value;render()};
-}
-function hist(id){return S.log.filter(z=>z.i===id).slice(0,5).map(z=>`<div class="ln"><span>${esc(z.x)}</span><span class="mut">${fmt(z.ts)}</span></div>`).join('')}
-function openItem(id){
-  const nw=!id;di=id;dr=nw?{id:'i'+Date.now().toString(36),n:'',q:0,l:'Архив',ph:'',nt:'',min:null,ord:(S.inv[0]?.ord??1)-1}:{...S.inv.find(v=>v.id===id)};
-  const ed=(sub==='inv'&&tab==='admin')||edit,rs=nw?0:reserved(S.inv.find(v=>v.id===id));
-  $('#dlg').innerHTML=`<div id="pvw"></div>${ed?`<label class="btn" style="cursor:pointer">${svg('cam',18)}<span id="phl">${dr.ph?'Заменить фото':'Сделать или выбрать фото'}</span><input type="file" id="fph" accept="image/*" hidden></label>
-  <label class="l">Название</label><input class="in" id="in_n" value="${esc(dr.n)}" placeholder="Например, Хабби фиолетовый">
-  <label class="l">Расположение</label><select class="in" id="in_l"><option value="">не указано</option>${LOCS.map(o=>`<option ${dr.l===o?'selected':''}>${o}</option>`).join('')}</select>
-  <label class="l">Количество (можно вписать вручную)</label><div style="display:flex;justify-content:center">${stepper(dr.q,'d')}</div>
-  <label class="l">Предупреждать, когда останется не больше (необязательно)</label><input class="in" id="in_m" type="number" min="0" value="${dr.min??''}" placeholder="Например, 3">
-  <label class="l">Заметка</label><input class="in" id="in_nt" value="${esc(dr.nt)}">
-  ${nw?'':`<label class="l">Последние изменения</label>${hist(id)||'<div class="mut">Пока нет</div>'}`}
-  <div class="fb">${nw?'':'<button class="btn dg" data-a="del">Удалить</button>'}<button class="btn" data-a="cx">Отмена</button><button class="btn pr" data-a="sv">Сохранить</button></div>`
-  :`<h2 style="font-size:22px;margin:6px 0 6px">${esc(dr.n)}</h2><div class="mut">${dr.l||'место не указано'} · в наличии: <b style="color:var(--ink);font-size:18px">${dr.q??'—'}</b>${rs?` · в резерве: ${rs}`:''}</div>${dr.nt?`<div class="mut" style="margin-top:6px">${esc(dr.nt)}</div>`:''}${hist(id)?`<label class="l">Последние изменения</label>${hist(id)}`:''}<div class="fb"><button class="btn" data-a="cx">Закрыть</button></div>`}`;
-  pv();$('#dlg').showModal();
-}
-function pv(){const e=$('#pvw');if(e)e.innerHTML=dr.ph?`<img class="pv" src="${dr.ph}" alt="">`:`<div class="pv">${svg('stock',56)}</div>`}
-function openReq(){
-  rl=[];rk='get';
-  $('#dlg').innerHTML=`<h2 style="font-size:22px;margin-bottom:14px">Новая заявка</h2>
-  <div class="seg"><button class="on" data-a="rk" data-k="get">Получение</button><button data-a="rk" data-k="ret">Возврат</button></div>
-  <label class="l">Мероприятие</label><input class="in" id="r_e">
-  <label class="l">Площадка</label><input class="in" id="r_v" list="vn" placeholder="Например, Тульская"><datalist id="vn"><option>Тульская</option></datalist>
-  <div class="row" style="gap:10px;align-items:flex-start"><div style="flex:1"><label class="l" id="r_ol">Дата получения</label><input class="in" id="r_o" type="date"></div><div style="flex:1"><label class="l" id="r_bl">Дата возврата</label><input class="in" id="r_b" type="date"></div></div>
-  <label class="l">Позиции</label><div class="row" style="gap:8px"><input class="in" id="r_i" list="il" placeholder="Начните вводить"><datalist id="il">${S.inv.map(v=>`<option value="${esc(v.n)}">${v.q!=null?'в наличии '+v.q:''}</option>`).join('')}</datalist><input class="in" id="r_q" type="number" value="1" min="1" style="width:84px"><button class="btn pr" data-a="ra" style="flex:none">+</button></div>
-  <div id="rls" style="margin-top:6px"></div>
-  <label class="l">Комментарий</label><input class="in" id="r_c" placeholder="Например, застройка в 16:00">
-  <div class="fb"><button class="btn" data-a="cx">Отмена</button><button class="btn pr" data-a="rs">Отправить</button></div>`;
-  $('#dlg').showModal();
-}
-const rlr=()=>{$('#rls').innerHTML=rl.map((r,i)=>{const v=match(r[0]),w=rk==='get'&&(!v?'нет в списке склада':(v.q!=null&&r[1]>v.q?'на складе только '+v.q:''));return `<div class="ln"><span>${esc(r[0])} × ${r[1]}${w?` <span class="loc warn">${w}</span>`:''}</span><button class="ch" data-a="rr" data-i="${i}">✕</button></div>`}).join('')};
-function openReqView(id){
-  const r=S.reqs.find(z=>z.id===id);if(!r)return;
-  $('#dlg').innerHTML=`<div class="row"><h2 style="font-size:22px">№${esc(r.i)}</h2><span class="pl ${r.s}">${SL[r.s]}</span></div><div style="margin-top:8px"><b>${esc(r.e)}</b></div><div class="mut">${r.k==='ret'?'Возврат':'Получение'} · ${r.o||'—'}${r.b?' – '+r.b:''}${r.v?' · '+esc(r.v):''}</div>${r.c?`<div class="mut" style="margin-top:6px">Комментарий: ${esc(r.c)}</div>`:''}
-  <label class="l">Позиции</label>${(r.it||[]).map(z=>{const v=match(z[0]);return `<div class="ln"><span>${esc(z[0])} × ${z[1]}</span><span class="mut">${v?'на складе '+(v.q??'—'):'нет в списке'}</span></div>`}).join('')||'<div class="mut">Позиций нет</div>'}
-  <div class="fb">${actions(r)}<button class="btn dg" data-a="rdel" data-id="${r.id}">Удалить</button><button class="btn" data-a="cx">Закрыть</button></div>`;
-  $('#dlg').showModal();
-}
-async function saveReq(r){try{if(db){const{id,...d}=r;await db.doc('reqs/'+id).set(d)}}catch(e){toast('Не удалось сохранить заявку')}}
-function stock(r,sign){
-  const miss=[],ch=[];
-  (r.it||[]).forEach(z=>{const v=match(z[0]);if(!v){miss.push(z[0]);return}const from=v.q??0,to=Math.max(0,from+sign*z[1]);v.q=to;putInv(v,0);ch.push(`${v.n} ${from}→${to}`)});
-  return{miss,ch};
-}
-async function act(a,id){
-  const r=S.reqs.find(z=>z.id===id);if(!r)return;
-  if(a==='app'){r.s='ok';log('req',`Заявка №${r.i} одобрена`)}
-  else if(a==='rej'){r.s='rej';log('req',`Заявка №${r.i} отклонена`)}
-  else if(a==='issue'){const{miss,ch}=stock(r,-1);r.s='out';log('stock',`Выдача по №${r.i}: ${ch.join(', ')||'остатки не менялись'}`);if(miss.length)toast('Нет в списке склада: '+miss.join(', '))}
-  else if(a==='back2'){const{miss,ch}=stock(r,1);r.s='done';log('stock',`Возврат по №${r.i}: ${ch.join(', ')||'остатки не менялись'}`);if(miss.length)toast('Нет в списке склада: '+miss.join(', '))}
-  render();await saveReq(r);
-}
-const csvc=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
-async function dsave(name,data){if(!dl){toast('Скачивание недоступно в этом режиме');return}try{await dl.save({filename:name,data})}catch(e){}}
-async function addTask(){
-  const i=$('#tn'),t=i.value.trim();if(!t)return;
-  const id='t'+Date.now().toString(36),o={t,s:'idea',ts:Date.now(),u:me||''};
-  S.tasks.unshift({id,...o});render();
-  try{if(db)await db.doc('tasks/'+id).set(o)}catch(e){toast('Задача не сохранилась')}
-}
-document.addEventListener('keydown',e=>{if(e.key==='/'&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)){const s=$('#sq');if(s){e.preventDefault();s.focus()}}});
-document.addEventListener('click',async e=>{
-  if(e.target.id==='un'){if(ud)ud();$('#ts').hidden=true;return}
-  const b=e.target.closest('[data-a],[data-t]');if(!b)return;
-  if(b.dataset.t){tab=b.dataset.t;sub='';q='';lf='';location.hash=tab;render();scrollTo(0,0);return}
-  const a=b.dataset.a,sp=b.closest('.sp'),id=b.dataset.id;
-  if(a==='theme')theme();
-  else if(a==='inc'||a==='dec'){
-    const d=a==='inc'?1:-1;
-    if(sp.dataset.x==='d'){dr.q=Math.max(0,(+dr.q||0)+d);sp.querySelector('input').value=dr.q}
-    else{const v=S.inv.find(z=>z.id===sp.dataset.x);bump(v.id,Math.max(0,(v.q||0)+d))}
-  }
-  else if(a==='open')openItem(id);
-  else if(a==='edit'){edit=!edit;render()}
-  else if(a==='loc'){lf=b.dataset.l;render()}
-  else if(a==='lowgo'){tab='stock';lf='low';location.hash='stock';render();scrollTo(0,0)}
-  else if(['inv','queue','active','hist','tasks','audit','data'].includes(a)){sub=a;render();scrollTo(0,0)}
-  else if(a==='back'){sub='';render()}
-  else if(a==='add')openItem(null);
-  else if(a==='cx')$('#dlg').close();
-  else if(a==='sv'){
-    dr.n=$('#in_n').value.trim();if(!dr.n){$('#in_n').focus();return}
-    if(!di&&match(dr.n)){toast('Такая позиция уже есть');return}
-    dr.l=$('#in_l').value;dr.nt=$('#in_nt').value.trim();const m=$('#in_m').value;dr.min=m===''?null:Math.max(0,Math.floor(+m));
-    const old=di?S.inv.find(v=>v.id===di):null;
-    if(!old)log('add',`Добавлена позиция: ${dr.n} (${dr.q??'—'})`,dr.id);
-    else if(old.q!==dr.q)log('qty',`${dr.n}: ${old.q??'—'} → ${dr.q??'—'}`,dr.id);
-    putInv(dr);$('#dlg').close();
-  }
-  else if(a==='del'){
-    const v=S.inv.find(z=>z.id===di);S.inv=S.inv.filter(z=>z.id!==di);render();$('#dlg').close();
-    try{if(db)await db.doc('inv/'+di).delete();log('del',`Удалена позиция: ${v.n}`)}catch(e){toast('Не удалось удалить')}
-  }
-  else if(a==='newreq')openReq();
-  else if(a==='vreq')openReqView(id);
-  else if(a==='rf'){rf=b.dataset.k;render()}
-  else if(a==='rk'){rk=b.dataset.k;document.querySelectorAll('.seg button').forEach(z=>z.classList.toggle('on',z===b));$('#r_ol').textContent=rk==='get'?'Дата получения':'Дата возврата';$('#r_bl').textContent=rk==='get'?'Дата возврата':'Дата получения';rlr()}
-  else if(a==='ra'){const n=$('#r_i').value.trim();if(n){rl.push([n,+$('#r_q').value||1]);$('#r_i').value='';$('#r_q').value=1;rlr()}}
-  else if(a==='rr'){rl.splice(+b.dataset.i,1);rlr()}
-  else if(a==='rs'){
-    const ev=$('#r_e').value.trim();if(!ev){$('#r_e').focus();return}
-    const f=s=>s?s.slice(8,10)+'.'+s.slice(5,7):'';
-    const i=String(Math.max(0,...S.reqs.map(r=>parseInt(r.i)||0))+1).padStart(4,'0');
-    const o={i,e:ev,v:$('#r_v').value.trim(),o:f($('#r_o').value),b:f($('#r_b').value),s:'wait',k:rk,it:rl,c:$('#r_c').value.trim()};
-    $('#dlg').close();tab='reqs';sub='';location.hash='reqs';
-    S.reqs.unshift({id:'r'+i,...o});render();
-    try{if(db)await db.doc('reqs/r'+i).set(o);log('req',`Новая заявка №${i}: ${ev}`)}catch(e){toast('Заявка не сохранилась')}
-  }
-  else if(['app','rej','issue','back2'].includes(a)){await act(a,id);if($('#dlg').open)$('#dlg').close()}
-  else if(a==='rdel'){const r=S.reqs.find(z=>z.id===id);S.reqs=S.reqs.filter(z=>z.id!==id);$('#dlg').close();render();try{if(db)await db.doc('reqs/'+id).delete();log('req',`Заявка №${r.i} удалена`)}catch(e){toast('Не удалось удалить')}}
-  else if(a==='tadd')addTask();
-  else if(a==='tcy'){const t=S.tasks.find(z=>z.id===id);t.s={idea:'work',work:'done',done:'idea'}[t.s];render();try{if(db){const{id:_,...d}=t;await db.doc('tasks/'+id).set(d)}}catch(e){toast('Не удалось сохранить')}}
-  else if(a==='tdel'){S.tasks=S.tasks.filter(z=>z.id!==id);render();try{if(db)await db.doc('tasks/'+id).delete()}catch(e){}}
-  else if(a==='aud'){aud.has(id)?aud.delete(id):aud.add(id);render()}
-  else if(a==='audfin'){log('audit',`Инвентаризация: сверено ${S.inv.filter(v=>aud.has(v.id)).length} из ${S.inv.length} позиций`);toast('Инвентаризация записана в историю');aud=new Set();sub='';render()}
-  else if(a==='x-inv')dsave('sklad.csv','\ufeff'+[['№','Позиция','Количество','Расположение','Мин. остаток','В резерве','Заметка'],...S.inv.map((v,i)=>[i+1,v.n,v.q??'',v.l,v.min??'',reserved(v),v.nt])].map(r=>r.map(csvc).join(',')).join('\n'));
-  else if(a==='x-req')dsave('zayavki.csv','\ufeff'+[['№','Мероприятие','Площадка','Тип','Статус','Дата','Возврат','Позиции','Комментарий'],...S.reqs.map(r=>[r.i,r.e,r.v,r.k==='ret'?'возврат':'получение',SL[r.s],r.o,r.b,(r.it||[]).map(z=>z[0]+' x'+z[1]).join('; '),r.c])].map(r=>r.map(csvc).join(',')).join('\n'));
-  else if(a==='x-json')dsave('sklad-backup.json',JSON.stringify({v:1,inv:S.inv,reqs:S.reqs,tasks:S.tasks}));
-  else if(a==='x-imp')$('#imp').click();
-  else if(a==='x-print'){try{print()}catch(er){toast('Печать недоступна в этом режиме')}}
+
+// === 2. DEXIE DB ===
+const db = new Dexie('sklad_db');
+db.version(1).stores({
+  users: '++id, username, passwordHash',
+  products: '++id, name, price, stock, createdAt',
+  orders: '++id, userId, total, status, createdAt',
+  orderItems: '++id, orderId, productId, quantity, price'
 });
-document.addEventListener('change',async e=>{
-  const z=e.target;
-  if(z.dataset.a==='num'){
-    const v=z.value===''?null:Math.max(0,Math.floor(+z.value)),sp=z.closest('.sp');
-    if(sp.dataset.x==='d')dr.q=v;else bump(sp.dataset.x,v);
-  }
-  else if(z.id==='fph'&&z.files[0]){const d=await shrink(z.files[0]);if(d){dr.ph=d;pv();$('#phl').textContent='Заменить фото'}}
-  else if(z.id==='imp'&&z.files[0]){
-    try{
-      const j=JSON.parse(await z.files[0].text());let n=0;
-      for(const [col,key] of [['inv','inv'],['reqs','reqs'],['tasks','tasks']])for(const o of (j[key]||[])){const{id,...d}=o;if(id&&db){await db.doc(col+'/'+id).set(d);n++}}
-      log('import',`Восстановлено из копии: ${n} записей`);toast(`Восстановлено записей: ${n}`);
-    }catch(er){toast('Не удалось прочитать файл копии')}
-    z.value='';
+
+// Авто-создание тестовых данных при пустой БД
+db.users.toArray().then(users => {
+  if (!users.length) {
+    db.users.bulkAdd([
+      { username: 'admin', passwordHash: 'admin123' },
+      { username: 'user', passwordHash: 'user123' }
+    ]);
   }
 });
-addEventListener('hashchange',()=>{const t=location.hash.slice(1);if(TABS.some(x=>x[0]===t)&&t!==tab){tab=t;sub='';render()}});
-init();
+
+// === 3. ЭЛЕМЕНТЫ ===
+const authOverlay = document.getElementById('authOverlay');
+const authModal = document.getElementById('authModal');
+const authLogin = document.getElementById('authLogin');
+const authPass = document.getElementById('authPass');
+const authBtn = document.getElementById('authBtn');
+const authCancel = document.getElementById('authCancel');
+const userGreeting = document.getElementById('userGreeting');
+const notice = document.getElementById('notice');
+const app = document.getElementById('app');
+
+function showNotice(msg, type = 'info') {
+  notice.textContent = msg;
+  notice.className = 'notice' + (type === 'success' ? ' success' : '');
+  notice.style.display = 'block';
+  setTimeout(() => notice.style.display = 'none', 5000);
+}
+
+// === 4. AUTH BUTTONS ===
+authBtn.onclick = () => {
+  const login = authLogin.value.trim();
+  const pass = authPass.value.trim();
+  if (!login || !pass) return showNotice('Введите логин и пароль', 'error');
+
+  db.users.where('username').equals(login).first().then(user => {
+    if (!user) return showNotice('Пользователь не найден', 'error');
+    // Simple password check
+    if (user.passwordHash !== pass) return showNotice('Неверный пароль', 'error');
+    login(user.username);
+  }).catch(e => showNotice('Ошибка доступа', 'error'));
+};
+
+authCancel.onclick = () => {
+  document.getElementById('authOverlay').style.display = 'none';
+  logout();
+});
+
+// === 5. CATALOG RENDER ===
+function renderCatalog(filter = 'all') {
+  db.products.toArray().then(products => {
+    // Фильтр доступа: показываем только авторизованным или всем
+    const showAll = !document.getElementById('userGreeting').textContent.includes('Гость') || filter === 'all';
+    
+    app.innerHTML = `
+      <div class="grid" id="catalog">
+        ${products.map(p => {
+          const canView = showAll || (document.getElementById('userGreeting').textContent !== 'Гость');
+          return `
+            <div class="card" onclick="openProduct(${p.id})" ${!canView ? 'style="opacity:0.5;pointer-events:none;"' : ''}>
+              <div class="title">${p.name}</div>
+              <div class="price">${p.price ? `${p.price} ₽` : 'Цена уточняется'}</div>
+              <div class="stock">Наличие: ${p.stock || 0} шт.</div>
+              <div class="actions">
+                <button class="btn-small" onclick="orderProduct(${p.id})" ${!canView ? 'disabled' : ''}>Купить</button>
+                <button class="btn-small" onclick="viewProduct(${p.id})" ${!canView ? 'disabled' : ''}>Подробнее</button>
+              </div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+      ${products.length === 0 ? '<p style="text-align:center;color:var(--mut)">Товары еще не добавлены</p>' : ''}
+    </div>`;
+  });
+}
+
+// === 5. PRODUCT FUNCTIONS ===
+function openProduct(id) {
+  db.products.get(id).then(p => {
+    app.innerHTML = `
+      <div class="card" style="max-width:500px;margin:0 auto">
+        <h3>${p.name}</h3>
+        <p>${p.description || 'Описание отсутствует'}</p>
+        <p><strong>Цена:</strong> ${p.price || 0} ₽</p>
+        <p><strong>Наличие:</strong> ${p.stock || 0} шт.</p>
+        <div style="margin-top:12px">
+          <button class="btn-small" onclick="orderProduct(${p.id})">Оформить заказ</button>
+          <button class="btn-small" onclick="renderCatalog()">Назад к каталогу</button>
+        </div>
+      </div>`;
+      document.getElementById('notice').style.display = 'none';
+    });
+  }
+}
+
+function orderProduct(productId) {
+  db.products.get(productId).then(p => {
+    const user = db.users.where('username').equals(sessionStorage.getItem('sklad_user') || 'guest').first();
+    if (!user) return showNotice('Сначала войдите в систему', 'error');
+
+    db.orders.add({
+      userId: 1, // в реальном приложении здесь был бы user.id
+      total: p.price,
+      status: 'pending'
+    }).then(orderId => {
+      db.orderItems.add({
+        orderId,
+        productId,
+        quantity: 1,
+        price: p.price
+      }).then(() => {
+        showNotice(`Заказ #${orderId} успешно создан!`, 'success');
+        setTimeout(() => renderCatalog(), 1000);
+      });
+    });
+  });
+}
+
+// === 6. THEME TOGGLE ===
+document.querySelectorAll('.theme-tgl span').forEach(span => {
+  span.addEventListener('click', () => {
+    document.documentElement.dataset.theme = span.dataset.theme;
+    localStorage.setItem('theme', span.dataset.theme);
+  });
+  if (localStorage.getItem('theme') === span.dataset.theme) document.documentElement.dataset.theme = span.dataset.theme;
+});
+
+// === 7. INIT ===
+renderCatalog();
+document.getElementById('notice').style.display = 'none';
+})();
 </script>
 </body>
 </html>
